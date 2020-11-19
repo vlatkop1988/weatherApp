@@ -1,0 +1,6 @@
+include ':presentation'
+include ':domain'
+include ':data_local_storage'
+include ':data_network'
+include ':app'
+rootProject.name = "WeatherApp"
