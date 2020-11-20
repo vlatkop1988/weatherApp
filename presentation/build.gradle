@@ -45,6 +45,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-compose:1.0.0-alpha02"
 }
 apply from: '../dep_common.gradle'
 apply from: '../dep_rx_java.gradle'
+apply plugin: "androidx.navigation.safeargs.kotlin"

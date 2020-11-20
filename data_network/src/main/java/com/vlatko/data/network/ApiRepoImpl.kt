@@ -12,4 +12,10 @@ class ApiRepoImpl : IApiRepo, KoinComponent {
 
     override fun getCurrentWeatherByCityName(cityName: String?): Observable<CurrentWeather> =
         weatherService.getCurrentWeatherByCityName(cityName, appId).map { it.toDomain() }
+
+    override fun getCurrentWeatherByGeoLocation(
+        lat: String?,
+        lon: String?
+    ): Observable<CurrentWeather> =
+        weatherService.getCurrentWeatherByGeoLocation(lat, lon, appId).map { it.toDomain() }
 }

@@ -11,4 +11,11 @@ interface WeatherService {
         @Query("q") cityName: String?,
         @Query("appid") appId: String?
     ): Observable<ResponseCurrentWeather>
+
+    @GET("weather")
+    fun getCurrentWeatherByGeoLocation(
+        @Query("lat") lat: String?,
+        @Query("lon") lon: String?,
+        @Query("appid") appId: String?
+    ): Observable<ResponseCurrentWeather>
 }
