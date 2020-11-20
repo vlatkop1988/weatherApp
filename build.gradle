@@ -21,6 +21,9 @@ buildscript {
 
         retrofit_version = '2.4.0'
         okhttp_version = '3.11.0'
+
+        rxLocation_version = "1.0.5"
+        google_location_services_version = "17.0.0"
     }
     ext.kotlin_version = "1.4.10"
     repositories {

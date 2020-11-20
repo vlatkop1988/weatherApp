@@ -1,8 +1,6 @@
 package com.vlatko.data.network
 
 import com.google.gson.Gson
-import com.vlatko.data.network.error.ErrorHandler
-import com.vlatko.data.network.interceptors.HeaderInterceptor
 import com.vlatko.data.network.interceptors.LoggingInterceptor
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -15,13 +13,10 @@ import java.util.concurrent.TimeUnit
 class RetrofitConfig {
 
     private var retrofit: Retrofit? = null
-    private val headerInterceptor = HeaderInterceptor()
-    internal val errorHandler = ErrorHandler()
     private var customGson: Gson? = null
 
     private fun init(baseUrl: String) {
         retrofit = createRetrofit(baseUrl)
-        errorHandler.iPing = PingImpl()
     }
 
     private fun createRetrofit(baseUrl: String) = Retrofit.Builder()
@@ -33,7 +28,6 @@ class RetrofitConfig {
         .build()
 
     private fun createOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(headerInterceptor)
         .addInterceptor(LoggingInterceptor())
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
@@ -60,21 +54,8 @@ class RetrofitConfig {
     companion object {
 
         private val instance = RetrofitConfig()
-
         val init = instance::init
-
-        val setHeader = instance.headerInterceptor::setHeader
-
         val setCustomGson = instance::setCustomGson
-
-        val subscribeToConnectivityErrors = instance.errorHandler::subscribeToConnectivityErrors
-
-        val subscribeToAuthorizationErrors = instance.errorHandler::subscribeToAuthorizationErrors
-
-        val subscribeToUnknownErrors = instance.errorHandler::subscribeToUnknownErrors
-
-        internal val errorHandler = instance.errorHandler
-
         internal val get = instance::get
     }
 }

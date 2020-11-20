@@ -15,7 +15,6 @@ class WeatherApp : Application(), KoinComponent {
         startKoin(this, listOf(ModuleGraph().get(this)))
         val networkConfig: INetworkConfigRepo by inject()
 
-        networkConfig.setLanguage(Locale.getDefault().language)
         networkConfig.setBaseUrl(BuildConfig.BASE_URL)
     }
 }

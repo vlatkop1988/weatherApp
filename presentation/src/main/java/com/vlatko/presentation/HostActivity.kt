@@ -6,25 +6,38 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
 import com.vlatko.presentation.base.BaseActivity
 import com.vlatko.presentation.base.HostActivityViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.activity_host.*
 
 class HostActivity : BaseActivity() {
 
     private lateinit var viewModel: HostActivityViewModel
+    lateinit var compositeDisposable: CompositeDisposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host)
+    }
+
+    override fun onResume() {
+        super.onResume()
         val factory: ViewModelProvider.Factory = NewInstanceFactory()
         viewModel = ViewModelProvider(this, factory).get(HostActivityViewModel::class.java)
 
-        viewModel.getCurrentWeather("Novi Sad",{
-            Toast.makeText(this, it.name,Toast.LENGTH_LONG).show()
-            tvCity.text = it.main?.temp.toString()
+        compositeDisposable = CompositeDisposable()
+        viewModel.getCurrentWeather("Novi Sad")
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                tvCity.text = it.name
+            }, {
+                Toast.makeText(this, viewModel.parseError(it), Toast.LENGTH_LONG).show()
+            }).addTo(compositeDisposable)
+    }
 
-        },{
-            Toast.makeText(this, it,Toast.LENGTH_LONG).show()
-        })
-
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.dispose()
     }
 }

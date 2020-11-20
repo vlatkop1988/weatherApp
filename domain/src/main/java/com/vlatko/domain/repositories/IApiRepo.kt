@@ -6,5 +6,5 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface IApiRepo {
-    fun getCurrentWeatherByCityName(cityName : String?) : Observable<Result<CurrentWeather,String>>
+    fun getCurrentWeatherByCityName(cityName : String?) : Observable<CurrentWeather>
 }
