@@ -1,6 +1,6 @@
 package com.vlatko.data.network.response
 
-data class ErrorResponse(
+data class WeatherErrorResponse(
     var cod: Int? = null,
     var message: String? = null
 )

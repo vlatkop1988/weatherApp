@@ -5,6 +5,25 @@
 
     <fragment
         android:id="@+id/weatherOverviewFragment"
-        android:name="com.vlatko.presentation.WeatherOverviewFragment"
-        android:label="WeatherOverviewFragment" />
+        android:name="com.vlatko.presentation.fragments.WeatherOverviewFragment"
+        android:label="WeatherOverviewFragment" >
+        <action
+            android:id="@+id/action_weatherOverviewFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.vlatko.presentation.fragments.FavoritesFragment"
+        android:label="FavoritesFragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_weatherOverviewFragment3"
+            app:destination="@id/weatherOverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.vlatko.presentation.fragments.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

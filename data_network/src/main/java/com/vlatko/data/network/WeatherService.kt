@@ -9,13 +9,15 @@ interface WeatherService {
     @GET("weather")
     fun getCurrentWeatherByCityName(
         @Query("q") cityName: String?,
-        @Query("appid") appId: String?
+        @Query("appid") appId: String?,
+        @Query("units") units: String? = "metric"
     ): Observable<ResponseCurrentWeather>
 
     @GET("weather")
     fun getCurrentWeatherByGeoLocation(
         @Query("lat") lat: String?,
         @Query("lon") lon: String?,
-        @Query("appid") appId: String?
+        @Query("appid") appId: String?,
+        @Query("units") units: String? = "metric"
     ): Observable<ResponseCurrentWeather>
 }

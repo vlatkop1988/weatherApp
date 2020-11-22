@@ -4,9 +4,9 @@ plugins {
     id 'kotlin-android-extensions'
 }
 ext {
-    BASE_URL = "BASE_URL"
-    developBaseUrl = "\"https://api.openweathermap.org/data/2.5/\""
-    prodBaseUrl = "\"https://api.openweathermap.org/data/2.5/\""
+    WEATHER_BASE_URL = "WEATHER_BASE_URL"
+    developWeatherBaseUrl = "\"https://api.openweathermap.org/data/2.5/\""
+    prodWeatherBaseUrl = "\"https://api.openweathermap.org/data/2.5/\""
 }
 android {
     compileSdkVersion compile_sdk_version
@@ -51,11 +51,11 @@ android {
         develop {
             dimension environment
             applicationIdSuffix ".develop.test"
-            buildConfigField "String", 'BASE_URL', developBaseUrl
+            buildConfigField "String", 'WEATHER_BASE_URL', developWeatherBaseUrl
         }
         production {
             dimension environment
-            buildConfigField "String", 'BASE_URL', prodBaseUrl
+            buildConfigField "String", 'WEATHER_BASE_URL', prodWeatherBaseUrl
         }
     }
     variantFilter { variant ->

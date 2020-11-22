@@ -1,5 +1,5 @@
 package com.vlatko.domain
 
-interface ErrorParser {
+interface IErrorParser {
     fun parse(error: Throwable) : String?
 }

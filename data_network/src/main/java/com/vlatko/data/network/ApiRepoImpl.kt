@@ -18,4 +18,5 @@ class ApiRepoImpl : IApiRepo, KoinComponent {
         lon: String?
     ): Observable<CurrentWeather> =
         weatherService.getCurrentWeatherByGeoLocation(lat, lon, appId).map { it.toDomain() }
+
 }

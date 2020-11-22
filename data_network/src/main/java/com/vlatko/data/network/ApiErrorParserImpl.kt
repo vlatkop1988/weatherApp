@@ -3,22 +3,22 @@ package com.vlatko.data.network
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.vlatko.data.network.response.ErrorResponse
-import com.vlatko.domain.ErrorParser
+import com.vlatko.data.network.response.WeatherErrorResponse
+import com.vlatko.domain.IErrorParser
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.UnknownHostException
 
 private const val TAG = "ErrorHandler"
 
-class ApiErrorParser : ErrorParser {
+class ApiErrorParserImpl : IErrorParser {
 
     override fun parse(error: Throwable): String? {
         return when (error) {
             is HttpException -> {
-                val errorResponse: ErrorResponse = Gson().fromJson(
+                val errorResponse: WeatherErrorResponse = Gson().fromJson(
                     error.response()?.errorBody()?.string(),
-                    object : TypeToken<ErrorResponse>() {}.type
+                    object : TypeToken<WeatherErrorResponse>() {}.type
                 )
                 errorResponse.message
             }

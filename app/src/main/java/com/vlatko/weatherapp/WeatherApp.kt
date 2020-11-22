@@ -14,7 +14,6 @@ class WeatherApp : Application(), KoinComponent {
 
         startKoin(this, listOf(ModuleGraph().get(this)))
         val networkConfig: INetworkConfigRepo by inject()
-
-        networkConfig.setBaseUrl(BuildConfig.BASE_URL)
+        networkConfig.setBaseUrl(BuildConfig.WEATHER_BASE_URL)
     }
 }
