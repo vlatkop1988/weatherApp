@@ -1,9 +1,9 @@
 package com.vlatko.presentation
 
 import android.os.Bundle
-import com.vlatko.presentation.base.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
 
-class HostActivity : BaseActivity() {
+class HostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

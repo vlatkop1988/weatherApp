@@ -10,13 +10,21 @@ class ApiRepoImpl : IApiRepo, KoinComponent {
     private val appId = "de1811b1afe43f13308c51d369048d0e"
     private val weatherService = ServiceFactory.instance.getService(WeatherService::class.java)
 
-    override fun getCurrentWeatherByCityName(cityName: String?): Observable<CurrentWeather> =
-        weatherService.getCurrentWeatherByCityName(cityName, appId).map { it.toDomain() }
+    override fun getCurrentWeatherByCityName(
+        cityName: String?,
+        unit: String,
+        lang: String
+    ): Observable<CurrentWeather> =
+        weatherService.getCurrentWeatherByCityName(cityName, appId, unit, lang)
+            .map { it.toDomain() }
 
     override fun getCurrentWeatherByGeoLocation(
         lat: String?,
-        lon: String?
+        lon: String?,
+        unit: String,
+        lang: String
     ): Observable<CurrentWeather> =
-        weatherService.getCurrentWeatherByGeoLocation(lat, lon, appId).map { it.toDomain() }
+        weatherService.getCurrentWeatherByGeoLocation(lat, lon, appId, unit, lang)
+            .map { it.toDomain() }
 
 }

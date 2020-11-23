@@ -45,8 +45,15 @@ class FavoritesFragment : BaseFragment() {
             }
             onItemClick = {
                 val bundle = bundleOf("fromFavorites" to true, "cityName" to it)
-                findNavController().navigate(R.id.action_favoritesFragment_to_weatherOverviewFragment3, bundle)
+                findNavController().navigate(
+                    R.id.action_favoritesFragment_to_weatherOverviewFragment3,
+                    bundle
+                )
             }
+        }
+
+        tvSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_favoritesFragment_to_searchFragment)
         }
     }
 }

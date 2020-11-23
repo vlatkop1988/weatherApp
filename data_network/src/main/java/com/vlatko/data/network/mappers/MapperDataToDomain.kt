@@ -35,7 +35,8 @@ fun ResponseMain.toDomain() = Main(
     pressure = this.pressure,
     humidity = this.humidity,
     tempMin = this.temp_min,
-    tempMax = this.temp_max
+    tempMax = this.temp_max,
+    feelsLike = this.feels_like
 )
 
 fun ResponseWind.toDomain() = Wind(

@@ -14,8 +14,6 @@ class LocationRepoImpl(context: Context) : ILocationRepo {
     override fun getCurrentLocation(): Observable<Location> {
         val locationRequest = LocationRequest.create()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            .setSmallestDisplacement(2F)
-            .setInterval(2000)
         return rxLocation.location().updates(locationRequest)
     }
 }

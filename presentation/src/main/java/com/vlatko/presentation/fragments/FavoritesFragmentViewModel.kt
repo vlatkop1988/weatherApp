@@ -9,6 +9,6 @@ class FavoritesFragmentViewModel : BaseViewModel() {
     private val localStorageRepo: ILocalStorageRepo by inject()
 
     fun getFavoriteCities(): ArrayList<String> = localStorageRepo.getFavoriteCities()
-    fun removeFavoriteCity(cityName :String) = localStorageRepo.removeFavoriteCity(cityName)
+    fun removeFavoriteCity(cityName: String) = localStorageRepo.removeFavoriteCity(cityName)
 
 }

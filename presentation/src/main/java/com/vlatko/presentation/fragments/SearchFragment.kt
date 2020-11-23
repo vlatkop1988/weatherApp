@@ -1,5 +1,6 @@
 package com.vlatko.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_search_cities.*
 class SearchFragment : BaseFragment() {
 
     private lateinit var viewModel: SearchFragmentViewModel
-    lateinit var compositeDisposable: CompositeDisposable
+    private lateinit var compositeDisposable: CompositeDisposable
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,24 +35,25 @@ class SearchFragment : BaseFragment() {
         viewModel = ViewModelProvider(this).get(SearchFragmentViewModel::class.java)
         compositeDisposable = CompositeDisposable()
         clCity.gone()
+
+
         actSearch.apply {
-            requestFocus()
             addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     if (s?.length == 0) tvMessage.gone()
                     else getData(s.toString())
                 }
 
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
-        }
-
-        clCity.setOnClickListener {
-
         }
 
         ibAddToFavorite.setOnClickListener {
@@ -60,6 +62,7 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getData(s: String? = "") {
         viewModel.searchForCity(s)
             .observeOn(AndroidSchedulers.mainThread())
@@ -67,14 +70,26 @@ class SearchFragment : BaseFragment() {
                 clCity.visible()
                 tvMessage.gone()
                 tvCityName.text = it.name
-                tvCurrentTemp.text ="${ it.main?.temp?.toInt().toString()}º"
-                tvMinMaxTemp.text = "${it.main?.tempMax?.toInt().toString()}º / ${it.main?.tempMin?.toInt().toString()}º" },
+                tvCurrentTemp.text = "${it.main?.temp?.toInt().toString()}${
+                    if (viewModel.getUnit() == "metric") getString(R.string.label_metric)
+                    else getString(R.string.label_imperial)
+                }"
+                tvMinMaxTemp.text = "${it.main?.tempMax?.toInt().toString()}${
+                    if (viewModel.getUnit() == "metric") getString(R.string.label_metric)
+                    else getString(R.string.label_imperial)
+                } / ${
+                    it.main?.tempMin?.toInt().toString()
+                }${
+                    if (viewModel.getUnit() == "metric") getString(R.string.label_metric)
+                    else getString(R.string.label_imperial)
+                }"
+            },
                 {
-                clCity.gone()
-                tvMessage.apply {
-                    visible()
-                    text = viewModel.parseError(it)
-                }
-            }).addTo(compositeDisposable)
+                    clCity.gone()
+                    tvMessage.apply {
+                        visible()
+                        text = viewModel.parseError(it)
+                    }
+                }).addTo(compositeDisposable)
     }
 }

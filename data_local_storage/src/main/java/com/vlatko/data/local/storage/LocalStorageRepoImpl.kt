@@ -22,8 +22,7 @@ class LocalStorageRepoImpl(context: Context) : ILocalStorageRepo {
         return Gson().fromJson(
             sharedPreferences.getString(KEY_FAVORITE_CITIES, ""),
             FavoriteCities::class.java
-        )
-            ?: FavoriteCities()
+        ) ?: FavoriteCities()
     }
 
     private fun storeFavoritePlaces(favoritePlaces: FavoriteCities) {
@@ -34,7 +33,21 @@ class LocalStorageRepoImpl(context: Context) : ILocalStorageRepo {
             ).apply()
     }
 
+    override fun storeUnit(unit: String) {
+        sharedPreferences.edit().putString(KEY_UNIT, unit).apply()
+    }
+
+    override fun getUnit(): String = sharedPreferences.getString(KEY_UNIT, "metric") ?: "metric"
+
+    override fun storeTheme(theme: Int) {
+        sharedPreferences.edit().putInt(KEY_THEME, theme).apply()
+    }
+
+    override fun getTheme(): Int = sharedPreferences.getInt(KEY_THEME, -1)
+
     companion object {
         private const val KEY_FAVORITE_CITIES = "key_favorite_cities"
+        private const val KEY_UNIT = "key_unit"
+        private const val KEY_THEME = "key_theme"
     }
 }

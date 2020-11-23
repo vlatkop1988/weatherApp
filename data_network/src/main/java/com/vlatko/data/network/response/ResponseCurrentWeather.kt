@@ -32,7 +32,8 @@ data class ResponseMain(
     val pressure: Double? = null,
     val humidity: Double? = null,
     val temp_min: Double? = null,
-    val temp_max: Double? = null
+    val temp_max: Double? = null,
+    val feels_like: Double? = null
 )
 
 data class ResponseWind(

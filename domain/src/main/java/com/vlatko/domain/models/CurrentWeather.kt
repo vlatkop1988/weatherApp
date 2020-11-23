@@ -1,6 +1,6 @@
 package com.vlatko.domain.models
 
-data class CurrentWeather (
+data class CurrentWeather(
     val coord: Coordinates? = null,
     val weather: List<Weather>? = null,
     val base: String? = null,
@@ -32,7 +32,8 @@ data class Main(
     val pressure: Double? = null,
     val humidity: Double? = null,
     val tempMin: Double? = null,
-    val tempMax: Double? = null
+    val tempMax: Double? = null,
+    val feelsLike: Double? = null
 )
 
 data class Wind(
