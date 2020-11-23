@@ -33,6 +33,8 @@
         <action
             android:id="@+id/action_splashFragment_to_weatherOverviewFragment2"
             app:destination="@id/weatherOverviewFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit"
             app:launchSingleTop="false" />
     </fragment>
 </navigation>
