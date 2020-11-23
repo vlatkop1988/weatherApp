@@ -2,13 +2,16 @@ package com.vlatko.presentation
 
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
 object PermissionsUtil {
 
     fun checkAndRequest(
         activity: FragmentActivity,
+        fragment: Fragment,
         requestCode: Int,
         granted: (() -> Unit)?,
         vararg permissions: String
@@ -20,7 +23,7 @@ object PermissionsUtil {
         if (result == 0) {
             granted?.invoke()
         } else {
-            ActivityCompat.requestPermissions(activity, permissions, requestCode)
+            fragment.requestPermissions(permissions, requestCode)
         }
     }
 

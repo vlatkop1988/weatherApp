@@ -1,5 +1,5 @@
 <resources>
-
+    <string name="app_name" translatable="false">Weather App</string>
     <string name="label_metric" translatable="false">ºC</string>
     <string name="label_imperial" translatable="false">ºF</string>
     <string name="label_day_mode">Day Mode</string>
@@ -8,5 +8,4 @@
     <string name="label_search">Search</string>
     <string name="label_searching">searching...</string>
     <string name="label_real_feel">Real feel</string>
-
 </resources>

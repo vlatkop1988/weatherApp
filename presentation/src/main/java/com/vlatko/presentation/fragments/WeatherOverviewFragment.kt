@@ -1,8 +1,5 @@
 package com.vlatko.presentation.fragments
 
-import android.Manifest
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.content.res.Configuration.*
 import android.os.Bundle
@@ -10,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.vlatko.domain.models.CurrentWeather
-import com.vlatko.presentation.PermissionsUtil
 import com.vlatko.presentation.R
 import com.vlatko.presentation.base.BaseFragment
+import com.vlatko.presentation.ui.visible
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -25,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_weather_overview.*
 
 class WeatherOverviewFragment : BaseFragment() {
 
-    private val permissionsRequestCode = 2002
     private lateinit var viewModel: WeatherOverviewFragmentViewModel
     private lateinit var compositeDisposable: CompositeDisposable
 
@@ -77,11 +74,17 @@ class WeatherOverviewFragment : BaseFragment() {
         crossFade()
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
+        }
+    }
+
     private fun crossFade() {
         tvTemperature.apply {
             alpha = 0f
-            visibility = View.VISIBLE
-
+            visible()
             animate()
                 .alpha(1f)
                 .setDuration(3000L)
@@ -129,14 +132,7 @@ class WeatherOverviewFragment : BaseFragment() {
     private fun showData() {
         if (arguments?.getBoolean("fromFavorites") == true) {
             showDataForSelectedLocation(arguments?.getString("cityName") ?: "")
-        } else {
-            PermissionsUtil.checkAndRequest(
-                requireActivity(),
-                permissionsRequestCode,
-                ::showDataForCurrentLocation,
-                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        }
+        } else showDataForCurrentLocation()
     }
 
 
@@ -173,26 +169,12 @@ class WeatherOverviewFragment : BaseFragment() {
         }"
         tvConditionDesc.text = currentWeather.weather?.firstOrNull()?.description
         setWeatherIcon(currentWeather.weather?.firstOrNull()?.icon)
-        tvFeelsLike.text = "${getString(R.string.label_real_feel)}: " +
-                "${currentWeather.main?.feelsLike?.toInt()}${
-                    if (viewModel.getUnit() == "metric") getString(R.string.label_metric)
-                    else getString(R.string.label_imperial)
-                }"
+        tvFeelsLike.text =
+            "${getString(R.string.label_real_feel)}: ${currentWeather.main?.feelsLike?.toInt()}${
+                if (viewModel.getUnit() == "metric") getString(R.string.label_metric)
+                else getString(R.string.label_imperial)
+            }"
 
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            permissionsRequestCode -> PermissionsUtil.checkResult(
-                grantResults,
-                ::showData
-            )
-        }
     }
 
     companion object {
